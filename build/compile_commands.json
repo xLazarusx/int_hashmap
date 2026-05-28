@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/home/lau/Development/hashmap/build",
+  "command": "/usr/bin/gcc  -I/home/lau/Development/hashmap/include -std=gnu11 -std=c11 -g -Wall -Wextra -Wpedantic -o CMakeFiles/hashmap.dir/src/main.c.o -c /home/lau/Development/hashmap/src/main.c",
+  "file": "/home/lau/Development/hashmap/src/main.c",
+  "output": "CMakeFiles/hashmap.dir/src/main.c.o"
+},
+{
+  "directory": "/home/lau/Development/hashmap/build",
+  "command": "/usr/bin/gcc  -I/home/lau/Development/hashmap/include -std=gnu11 -std=c11 -g -Wall -Wextra -Wpedantic -o CMakeFiles/hashmap.dir/src/hashmap.c.o -c /home/lau/Development/hashmap/src/hashmap.c",
+  "file": "/home/lau/Development/hashmap/src/hashmap.c",
+  "output": "CMakeFiles/hashmap.dir/src/hashmap.c.o"
+}
+]
