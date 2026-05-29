@@ -58,6 +58,10 @@ for (int i = 0; i < s.length(); i++){
 int hash = (((day * R + month) % M) * R + year) %M;
 ```
 
+## Seperate Chaining
+
+## Lineare Probing
+
 # References
 
 - Sedgwick, R. & Wayne, K. (2011). *Algorithms, Fourth Edition*. Addison-Wesley.
