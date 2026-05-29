@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lau/Development/hashmap
+CMAKE_SOURCE_DIR = /home/lau/Development/int_hashmap
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lau/Development/hashmap/build
+CMAKE_BINARY_DIR = /home/lau/Development/int_hashmap/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/lau/Development/hashmap/build/CMakeFiles /home/lau/Development/hashmap/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lau/Development/int_hashmap/build/CMakeFiles /home/lau/Development/int_hashmap/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/lau/Development/hashmap/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lau/Development/int_hashmap/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -117,24 +117,48 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named hashmap
+# Target rules for targets named main
 
 # Build rule for target.
-hashmap: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 hashmap
-.PHONY : hashmap
+main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 main
+.PHONY : main
 
 # fast build rule for target.
-hashmap/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/hashmap.dir/build.make CMakeFiles/hashmap.dir/build
-.PHONY : hashmap/fast
+main/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
+.PHONY : main/fast
+
+src/hash_functions.o: src/hash_functions.c.o
+.PHONY : src/hash_functions.o
+
+# target to build an object file
+src/hash_functions.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/hash_functions.c.o
+.PHONY : src/hash_functions.c.o
+
+src/hash_functions.i: src/hash_functions.c.i
+.PHONY : src/hash_functions.i
+
+# target to preprocess a source file
+src/hash_functions.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/hash_functions.c.i
+.PHONY : src/hash_functions.c.i
+
+src/hash_functions.s: src/hash_functions.c.s
+.PHONY : src/hash_functions.s
+
+# target to generate assembly for a file
+src/hash_functions.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/hash_functions.c.s
+.PHONY : src/hash_functions.c.s
 
 src/hashmap.o: src/hashmap.c.o
 .PHONY : src/hashmap.o
 
 # target to build an object file
 src/hashmap.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/hashmap.dir/build.make CMakeFiles/hashmap.dir/src/hashmap.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/hashmap.c.o
 .PHONY : src/hashmap.c.o
 
 src/hashmap.i: src/hashmap.c.i
@@ -142,7 +166,7 @@ src/hashmap.i: src/hashmap.c.i
 
 # target to preprocess a source file
 src/hashmap.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/hashmap.dir/build.make CMakeFiles/hashmap.dir/src/hashmap.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/hashmap.c.i
 .PHONY : src/hashmap.c.i
 
 src/hashmap.s: src/hashmap.c.s
@@ -150,7 +174,7 @@ src/hashmap.s: src/hashmap.c.s
 
 # target to generate assembly for a file
 src/hashmap.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/hashmap.dir/build.make CMakeFiles/hashmap.dir/src/hashmap.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/hashmap.c.s
 .PHONY : src/hashmap.c.s
 
 src/main.o: src/main.c.o
@@ -158,7 +182,7 @@ src/main.o: src/main.c.o
 
 # target to build an object file
 src/main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/hashmap.dir/build.make CMakeFiles/hashmap.dir/src/main.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.c.o
 .PHONY : src/main.c.o
 
 src/main.i: src/main.c.i
@@ -166,7 +190,7 @@ src/main.i: src/main.c.i
 
 # target to preprocess a source file
 src/main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/hashmap.dir/build.make CMakeFiles/hashmap.dir/src/main.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.c.i
 .PHONY : src/main.c.i
 
 src/main.s: src/main.c.s
@@ -174,7 +198,7 @@ src/main.s: src/main.c.s
 
 # target to generate assembly for a file
 src/main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/hashmap.dir/build.make CMakeFiles/hashmap.dir/src/main.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.c.s
 .PHONY : src/main.c.s
 
 # Help Target
@@ -185,7 +209,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... hashmap"
+	@echo "... main"
+	@echo "... src/hash_functions.o"
+	@echo "... src/hash_functions.i"
+	@echo "... src/hash_functions.s"
 	@echo "... src/hashmap.o"
 	@echo "... src/hashmap.i"
 	@echo "... src/hashmap.s"

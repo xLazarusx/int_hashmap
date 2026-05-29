@@ -1,7 +1,7 @@
 {
 	"InstallScripts" : 
 	[
-		"/home/lau/Development/hashmap/build/cmake_install.cmake"
+		"/home/lau/Development/int_hashmap/build/cmake_install.cmake"
 	],
 	"Parallel" : false
 }

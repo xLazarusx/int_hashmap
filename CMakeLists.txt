@@ -15,10 +15,10 @@ add_compile_options(
     -Wpedantic
 )
 
-add_executable( hashmap
+add_executable( main
     src/main.c
     src/hashmap.c
     src/hashmap.h
+    src/hash_functions.c
+    src/hash_functions.h
 )
-
-target_include_directories(hashmap PRIVATE include)
