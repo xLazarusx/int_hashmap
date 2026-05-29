@@ -4,10 +4,11 @@
 #define R 31
 #define DEFAULT 0
 
-int int_hashing(int num, int hashmap_size){
-    return num % hashmap_size;
+int int_hashing(int *num, int hashmap_size){
+    return (*num) % hashmap_size;
 }
 
+/*
 int float_hashing(float num, int hashmap_size){
     int int_num = 0;
     int *ptr_int_num = &int_num;
@@ -42,3 +43,4 @@ int compound_hashing(int *compound_key, size_t size, int hashmap_size){
 
     return hash;
 }
+*/
