@@ -25,10 +25,13 @@ int main(void){
     add_to_hashmap(&key_9, &value_9);
     add_to_hashmap(&key_10, &value_10);
 
+    remove_from_hashmap(&key_1);
+    int erg;
+    map_status_t err_code = get_value(&key_5, &erg);
 
-    int *erg = get_value(&key_5);
+    process_error_code(err_code);
 
-    printf("Result is: %d\n", *erg);
+    printf("Result is: %d\n", erg);
 
     return 0;
 }
