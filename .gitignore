@@ -56,3 +56,4 @@ dkms.conf
 
 # test builds
 src/main
+src/test
