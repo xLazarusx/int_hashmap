@@ -24,8 +24,8 @@ int linear_search_free_slot(int index) {
     int tmp_index = index;
 
     do {
-        if (hashmap[index] == NULL) {
-            return index;
+        if (hashmap[tmp_index] == NULL) {
+            return tmp_index;
         }
 
         tmp_index = (tmp_index + 1) % hashmap_size;
@@ -78,14 +78,13 @@ map_status_t map_rehashing(void) {
     int old_hashmap_size = hashmap_size;
     hashmap_size = next_prime(hashmap_size * 2);
 
-    bucket **tmp_hashmap = calloc(hashmap_size, sizeof(bucket));
+    bucket **tmp_hashmap = calloc(hashmap_size, sizeof(bucket*));
 
     for (int index = 0; index < old_hashmap_size; index++) {
         if (hashmap[index] != NULL) {
             int new_index = int_hashing(hashmap[index]->key, hashmap_size);
             tmp_hashmap[new_index] = hashmap[index];
         }
-        continue;
     }
 
     free(hashmap);
@@ -106,7 +105,7 @@ bucket *initialize_bucket_object (int *key, int *value) {
 map_status_t add_to_hashmap (int *key, int *value){
 
     if (hashmap == NULL) {
-        hashmap = calloc(hashmap_size, sizeof(bucket));
+        hashmap = calloc(hashmap_size, sizeof(bucket*));
         if (!hashmap) {
             return MAP_ERROR;
         }
@@ -197,22 +196,22 @@ map_status_t destroy_hashmap(void) {
     free(hashmap);
     hashmap = NULL;
 
-    return MAP_DESTROY_SUC;
+    return MAP_DESTROY;
 }
 
 void process_error_code(map_status_t err_code) {
     switch (err_code) {
-        case 0:
+        case MAP_DESTROY:
+            printf("MAP SUCCESSFULL DESTROYED");
+            break;
+        case MAP_OK:
             printf("MAP STATUS OK\n");
             break;
-        case -1:
+        case MAP_ERROR:
             printf("MAP STATUS ERROR\n");
             break;
-        case -2:
+        case MAP_NOT_FOUND:
             printf("MAP STATUS NOT FOUND\n");
-            break;
-        case -3:
-            printf("MAP SUCCESSFULL DESTROYED");
             break;
         default:
             printf("MAP STATUS OK\n");
