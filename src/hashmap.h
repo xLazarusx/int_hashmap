@@ -6,8 +6,9 @@
 typedef enum {
     MAP_DESTROY = 1,
     MAP_OK = 0,
-    MAP_ERROR = -1,
-    MAP_NOT_FOUND = -2,
+    MAP_ITEM_NOT_FOUND = -1,
+    MAP_ERROR = -2,
+    MAP_NOT_FOUND = -3,
 }map_status_t;
 
 map_status_t add_to_hashmap(int *key, int *value);

@@ -13,18 +13,19 @@ typedef struct bucket_t bucket;
 typedef struct bucket_t{
     int *key;
     int *value;
+    _Bool used;
 }bucket;
 
 static int hashmap_size = INITIAL_HASHMAP_SIZE;
 static int element_count;
 static bucket **hashmap;
 
-int linear_search_free_slot(int index) {
+int linear_search_free_slot(bucket **map, int index) {
 
     int tmp_index = index;
 
     do {
-        if (hashmap[tmp_index] == NULL) {
+        if (map[tmp_index] == NULL || map[tmp_index]->used == false) {
             return tmp_index;
         }
 
@@ -40,12 +41,16 @@ int linear_search_key (int index, int key) {
     int tmp_index = index;
 
     do {
-        if (hashmap[tmp_index] != NULL && *(hashmap[tmp_index]->key) == key ) {
+        if (hashmap[tmp_index] == NULL) {
+            break;
+        }
+
+        if (*(hashmap[tmp_index]->key) == key ) {
             return tmp_index;
         }
+
         tmp_index = (tmp_index + 1) % hashmap_size;
     } while (index != tmp_index);
-
     return -1;
 }
 
@@ -82,7 +87,13 @@ map_status_t map_rehashing(void) {
 
     for (int index = 0; index < old_hashmap_size; index++) {
         if (hashmap[index] != NULL) {
+
+            if (hashmap[index]->used == false) {
+                free(hashmap[index]);
+                continue;
+            }
             int new_index = int_hashing(hashmap[index]->key, hashmap_size);
+            new_index = linear_search_free_slot(tmp_hashmap, new_index);
             tmp_hashmap[new_index] = hashmap[index];
         }
     }
@@ -93,13 +104,36 @@ map_status_t map_rehashing(void) {
     return MAP_OK;
 }
 
-bucket *initialize_bucket_object (int *key, int *value) {
-    bucket *new_bucket = malloc(sizeof(bucket));
+map_status_t initialize_bucket_object (int *key, int *value, int index) {
 
-    new_bucket->key = key;
-    new_bucket->value = value;
+    if (hashmap[index] == NULL ) {
 
-    return new_bucket;
+        bucket *new_bucket = malloc(sizeof(bucket));
+
+        if (!new_bucket) {
+            return MAP_ERROR;
+        }
+
+        new_bucket->key = key;
+        new_bucket->value = value;
+        new_bucket->used = true;
+
+        hashmap[index] = new_bucket;
+
+        element_count++;
+
+        return MAP_OK;
+    }
+
+    bucket *tmp_bucket = hashmap[index];
+
+    tmp_bucket->key = key;
+    tmp_bucket->value = value;
+    tmp_bucket->used = true;
+
+    element_count++;
+
+    return MAP_OK;
 }
 
 map_status_t add_to_hashmap (int *key, int *value){
@@ -115,29 +149,22 @@ map_status_t add_to_hashmap (int *key, int *value){
         map_status_t err_code = map_rehashing();
 
         if (err_code != MAP_OK) {
-            printf("REHASHING ERROR OCCURED, ERROR CODE(map_status_t): %d\n", err_code);
+            printf("REHASHING ERROR OCCURED, ERROR CODE: %d\n", err_code);
         }
     }
 
     int index = int_hashing(key, hashmap_size);
 
-    bucket *new_node = initialize_bucket_object(key, value);
-
     if (hashmap[index] != NULL){
-        index = linear_search_free_slot(index);
-
-        if (index == -1) {
-            return MAP_ERROR;
-        }
-
-        hashmap[index] = new_node;
-        element_count++;
-
-        return MAP_OK;
+        index = linear_search_free_slot(hashmap, index);
     }
 
-    hashmap[index] = new_node;
-    element_count++;
+    if (index == MAP_ITEM_NOT_FOUND) {
+        return MAP_ITEM_NOT_FOUND;
+    }
+
+    initialize_bucket_object(key, value, index);
+
     return MAP_OK;
 }
 
@@ -154,9 +181,7 @@ map_status_t remove_from_hashmap (int *key) {
         return MAP_ERROR;
     }
 
-    free(hashmap[index]);
-
-    hashmap[index] = NULL;
+    hashmap[index]->used = false;
     element_count--;
 
     return MAP_OK;
@@ -172,7 +197,7 @@ map_status_t get_value_hashmap(int *key, int *value) {
     int index_searched_item = linear_search_key(index, *(key));
 
     if (index_searched_item == -1) {
-        return MAP_ERROR;
+        return MAP_ITEM_NOT_FOUND;
     }
 
     *(value) = *(hashmap[index_searched_item]->value);
